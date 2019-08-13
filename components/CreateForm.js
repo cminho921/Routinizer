@@ -1,4 +1,5 @@
 import React, {Fragment, useState, Component} from 'react';
+import axios from 'axios';
 import { Input, Icon } from 'react-native-elements';
 import TimePicker from 'react-native-simple-time-picker';
 import {
@@ -20,13 +21,38 @@ class CreateForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      hour: 0,
-      minute: 0,
       group: '',
       selectedHours: 0,
       selectedMinutes: 0
     }
+
+    this.handleSubmitButton = this.handleSubmitButton.bind(this);
+    this.handleMainButton = this.handleMainButton.bind(this);
   }
+
+  handleSubmitButton() {
+    var requestUrl = 'http://10.3.33.11:3000/api/routines';      
+    var routine = {
+        name: this.state.name,
+        description: this.state.description,
+        hour: this.state.selectedHours,
+        minute: this.state.selectedMinutes,
+        group: this.state.group,
+    }   
+    axios.post(requestUrl, routine)
+    .then(function(response){
+        console.log("success",response.data)
+    })
+    .catch(function(response){
+        console.log("error", response);
+    }); 
+  }
+
+  handleMainButton() {
+    this.props.changeCurrentScreen('main');
+    
+  }
+
   render() {
     const { selectedHours, selectedMinutes } = this.state;
     return (
@@ -56,12 +82,12 @@ class CreateForm extends React.Component {
         <View >
           <View style={styles.alternativeLayoutButtonContainer}>
             <Button
-              onPress={() => this.props.changeCurrentScreen('main')}
+              onPress={this.handleSubmitButton}
               title="Save Routine"
               color="#841584"
             />
             <Button
-              onPress={() => this.props.changeCurrentScreen('main')}
+              onPress={this.handleMainButton}
               title="Back to Main"
               color="#841584"
             />

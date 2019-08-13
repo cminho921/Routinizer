@@ -20,6 +20,25 @@ router.get('/routines', (req, res) => (
   })
 ))
 
+router.post('/routines', (req, res) => {
+  let newRoutine = new Routine({
+    name: req.body.name,
+    description: req.body.description,
+    hour: req.body.hour,
+    minute: req.body.minute,
+    group: req.body.group
+  })
+  newRoutine.save((err, data) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    } else {
+      console.log(data);
+      res.status(200).send(data);
+    }
+  })
+})
+
 
 
 

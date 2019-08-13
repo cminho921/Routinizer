@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from 'react';
+import axios from 'axios';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,10 +26,24 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentScreen: 'main',
-      data: sampleData
+      data: []  
     }
 
     this.changeCurrentScreen = this.changeCurrentScreen.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('http://10.3.33.11:3000/api/routines')
+      .then((res) => {
+        const routineData = res.data;
+        console.log(routineData);
+        this.setState({
+          data: routineData
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   changeCurrentScreen(input) {

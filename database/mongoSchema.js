@@ -6,11 +6,11 @@ mongoose.Promise = global.Promise;
 
 // Define movie schema
 var routineSchema = new mongoose.Schema({
-  title: String,
+  name: String,
   description: String,
-  hour: Number,
-  minute: Number,
   group: String,
+  hours: Number,
+  minutes: Number,
 });
 
 // Export Mongoose model

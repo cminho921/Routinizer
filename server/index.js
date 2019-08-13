@@ -1,9 +1,11 @@
-const Routine = require('../database/mongoSchema')
+const Routine = require('../database/mongoSchema');
 var express = require('express');
 var bodyParser = require('body-parser');
 const port = 3000;
 const router = express.Router();
+
 var app = express();
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api', router);
@@ -21,11 +23,12 @@ router.get('/routines', (req, res) => (
 ))
 
 router.post('/routines', (req, res) => {
+  console.log(req.body);
   let newRoutine = new Routine({
     name: req.body.name,
     description: req.body.description,
-    hour: req.body.hour,
-    minute: req.body.minute,
+    hours: req.body.hours,
+    minutes: req.body.minutes,
     group: req.body.group
   })
   newRoutine.save((err, data) => {

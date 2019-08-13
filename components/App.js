@@ -26,13 +26,27 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentScreen: 'main',
-      data: []  
+      data: [],
+      test: true,  
     }
 
     this.changeCurrentScreen = this.changeCurrentScreen.bind(this);
+    this.getRoutine = this.getRoutine.bind(this);
+    this.postRoutine = this.postRoutine.bind(this);
+    this.changeState = this.changeState.bind(this);
   }
 
   componentDidMount() {
+    this.getRoutine();
+  }
+
+  changeState() {
+    this.setState({
+      test: !this.state.test,
+    })
+  }
+
+  getRoutine() {
     axios.get('http://10.3.33.11:3000/api/routines')
       .then((res) => {
         const routineData = res.data;
@@ -44,6 +58,17 @@ class App extends React.Component {
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  postRoutine(requestUrl, routine) {
+    axios.post(requestUrl, routine)
+      .then(function(response){
+          console.log("success",response.data)
+      })
+      .then(this.getRoutine())
+      .catch(function(response){
+          console.log("error", response);
+      });
   }
 
   changeCurrentScreen(input) {
@@ -92,7 +117,7 @@ class App extends React.Component {
               <SafeAreaView >
                 <View>
                   <Text style={styles.header_create_routine}>Create New Routine</Text>
-                  <CreateForm changeCurrentScreen={this.changeCurrentScreen}/>
+                  <CreateForm changeCurrentScreen={this.changeCurrentScreen} getRoutine={this.getRoutine} postRoutine={this.postRoutine}/>
                 </View>
               </SafeAreaView>
             </Modal>

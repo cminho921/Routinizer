@@ -22,8 +22,8 @@ class CreateForm extends React.Component {
       name: '',
       description: '',
       group: '',
-      selectedHours: 0,
-      selectedMinutes: 0
+      hours: 0,
+      minutes: 0
     }
 
     this.handleSubmitButton = this.handleSubmitButton.bind(this);
@@ -35,48 +35,47 @@ class CreateForm extends React.Component {
     var routine = {
         name: this.state.name,
         description: this.state.description,
-        hour: this.state.selectedHours,
-        minute: this.state.selectedMinutes,
+        hours: this.state.hours,
+        minutes: this.state.minutes,
         group: this.state.group,
     }   
-    axios.post(requestUrl, routine)
-    .then(function(response){
-        console.log("success",response.data)
-    })
-    .catch(function(response){
-        console.log("error", response);
-    }); 
+    this.props.postRoutine(requestUrl, routine);
+    this.props.changeCurrentScreen('main');
+
+
   }
 
   handleMainButton() {
     this.props.changeCurrentScreen('main');
-    
   }
 
   render() {
-    const { selectedHours, selectedMinutes } = this.state;
+    const { hours, minutes } = this.state;
     return (
       <View >
         <Input
           placeholder='Routine name'
           leftIcon={<Icon name='update' size={24} color='black' />}
+          onChangeText={(text) => this.setState({name: text})}
         />
         <Input
           placeholder='description'
           leftIcon={<Icon name='update' size={24} color='black' />}
+          onChangeText={(text) => this.setState({description: text})}
         />
         <Input
           placeholder='group name'
           leftIcon={<Icon name='update' size={24} color='black' />}
+          onChangeText={(text) => this.setState({group: text})}
         />
-        <Text style={styles.time}>{selectedHours}hr:{selectedMinutes}min</Text>
+        <Text style={styles.time}>{hours}hr:{minutes}min</Text>
         <TimePicker
-          selectedHours={selectedHours}
+          selectedHours={hours}
           //initial Hourse value
-          selectedMinutes={selectedMinutes}
+          selectedMinutes={minutes}
           //initial Minutes value
           onChange={(hours, minutes) => this.setState({ 
-               selectedHours: hours, selectedMinutes: minutes 
+            hours: hours, minutes: minutes 
          })}
         />
         <View >

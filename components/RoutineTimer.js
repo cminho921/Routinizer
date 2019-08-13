@@ -21,7 +21,7 @@ const RoutineTimer = (props) => {
         <CountDown
           key={key}
           size={30}
-          until={routine.hour * 60 * 60 + routine.minute * 60}
+          until={routine.hours * 60 * 60 + routine.minutes * 60}
           onFinish={() => setCurrentTimer(currentTimer + 1)}
           onPress={() => alert('hello')}
           digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}

@@ -26,9 +26,9 @@ const RoutineEntry = (props) => {
   let totalTargetHour = 0;
   let totalTargetMinute = 0;
   for (let i = 0; i < targetGroup.length; i++) {
-    totalTargetSecond += targetGroup[i].hour * 60 * 60 + targetGroup[i].minute * 60;
-    totalTargetHour += targetGroup[i].hour;
-    totalTargetMinute += targetGroup[i].minute;
+    totalTargetSecond += targetGroup[i].hours * 60 * 60 + targetGroup[i].minutes * 60;
+    totalTargetHour += targetGroup[i].hours;
+    totalTargetMinute += targetGroup[i].minutes;
   }
   return (
       <View style={styles.container}>
